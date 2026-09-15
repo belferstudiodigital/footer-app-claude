@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cores da marca FOOTER */
+  --color-bg: #080808;
+  --color-surface: #141414;
+  --color-surface-2: #1c1c1c;
+  --color-border: #2a2a2a;
+  --color-text: #f0f0eb;
+  --color-text-muted: #a3a39c;
+  --color-lime: #caff3b;
+  --color-lime-dim: #a8d92f;
+  --color-success: #22c55e;
+  --color-warning: #f5a623;
+  --color-danger: #ef4444;
+
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-scale-in: scale-in 0.15s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    min-height: 100dvh;
+    overscroll-behavior-y: none;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  input, select, textarea, button {
+    font-size: 16px; /* evita zoom automático no iOS */
+  }
+  ::selection {
+    background: var(--color-lime);
+    color: #080808;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+@layer utilities {
+  .glass {
+    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, white 8%, transparent);
+  }
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .tap-shrink {
+    transition: transform 0.1s ease;
+  }
+  .tap-shrink:active {
+    transform: scale(0.96);
+  }
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
