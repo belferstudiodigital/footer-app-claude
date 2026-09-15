@@ -124,3 +124,4 @@ function traduzirErro(msg: string) {
   if (msg.includes('Invalid login credentials')) return 'E-mail ou senha incorretos.'
   return msg
 }
+fix login
