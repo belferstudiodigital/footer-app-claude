@@ -1,0 +1,133 @@
+@import "tailwindcss";
+
+@theme {
+  /* Cores da marca FOOTER */
+  --color-bg: #080808;
+  --color-surface: #141414;
+  --color-surface-2: #1c1c1c;
+  --color-border: #2a2a2a;
+  --color-text: #f0f0eb;
+  --color-text-muted: #a3a39c;
+  --color-lime: #caff3b;
+  --color-lime-dim: #a8d92f;
+  --color-success: #22c55e;
+  --color-warning: #f5a623;
+  --color-danger: #ef4444;
+
+  --font-display: "Bebas Neue", "Arial Narrow", sans-serif;
+  --font-body: "DM Sans", system-ui, -apple-system, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-pill: 999px;
+
+  --animate-fade-in: fade-in 0.2s ease-out;
+  --animate-scale-in: scale-in 0.15s ease-out;
+
+  @keyframes fade-in {
+    from { opacity: 0; transform: translateY(4px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scale-in {
+    from { opacity: 0; transform: scale(0.97); }
+    to { opacity: 1; transform: scale(1); }
+  }
+}
+
+@layer base {
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+  html {
+    color-scheme: dark;
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    min-height: 100dvh;
+    overscroll-behavior-y: none;
+  }
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+  }
+  input, select, textarea, button {
+    font-size: 16px; /* evita zoom automático no iOS */
+  }
+  ::selection {
+    background: var(--color-lime);
+    color: #080808;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+:root {
+  /* --- Liquid Glass: variáveis visuais --- */
+  --ios-bg-blur: blur(20px) saturate(190%);
+  --ios-radius: 20px; /* superelipse contínua */
+  --ios-glass-tint: color-mix(in srgb, var(--color-surface) 55%, transparent);
+  --ios-glass-tint-strong: color-mix(in srgb, var(--color-surface-2) 68%, transparent);
+  --ios-glass-border: color-mix(in srgb, white 12%, transparent);
+  --ios-glass-highlight: color-mix(in srgb, white 16%, transparent);
+  --ios-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
+  /* curva elástica que imita molas do sistema (iOS) */
+  --ios-spring: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@layer utilities {
+  .glass {
+    background: color-mix(in srgb, var(--color-surface) 70%, transparent);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid color-mix(in srgb, white 8%, transparent);
+  }
+
+  /* --- Liquid Glass: cards e superfícies flutuantes --- */
+  .ios-liquid-glass,
+  .ios-liquid-card {
+    background: var(--ios-glass-tint);
+    backdrop-filter: var(--ios-bg-blur);
+    -webkit-backdrop-filter: var(--ios-bg-blur);
+    border-radius: var(--ios-radius);
+    border: 1px solid var(--ios-glass-border);
+    box-shadow:
+      inset 0 1px 1px 0 var(--ios-glass-highlight),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+      var(--ios-shadow);
+    transition: transform 0.3s var(--ios-spring), box-shadow 0.3s ease, background 0.3s ease;
+  }
+  .ios-liquid-glass--strong {
+    background: var(--ios-glass-tint-strong);
+  }
+
+  .safe-top {
+    padding-top: env(safe-area-inset-top);
+  }
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* --- Molas do iOS: compressão elástica ao toque --- */
+  .tap-shrink,
+  .ios-fluid-button {
+    transition: transform 0.4s var(--ios-spring), background 0.3s ease;
+  }
+  .tap-shrink:active,
+  .ios-fluid-button:active {
+    transform: scale(0.96);
+  }
+
+  .scrollbar-none {
+    scrollbar-width: none;
+  }
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
